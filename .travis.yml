@@ -1,18 +1,21 @@
 matrix:
   include:
     - sudo: required
+      language: generic
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
       install: docker pull $DOCKER_IMAGE
       script: docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis.sh
     - sudo: required
+      language: generic
       services:
         - docker
       env: DOCKER_IMAGE=quay.io/pypa/manylinux1_i686 PRE_CMD=linux32
       install: docker pull $DOCKER_IMAGE
       script: docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis.sh
     - os: osx
-      language: python
-      python: "2.7"
-      script: python inspect.py
+      language: generic
+      script:
+        - brew install python
+        - python inspect.py
