@@ -159,9 +159,9 @@ class build_dso(Command):
 
         # fixup for MAC to build dylib (MH_DYLIB) instead of bundle (MH_BUNDLE)
         if sys.platform == 'darwin':
-            for i,val in enumerate(self.compiler_so):
+            for i,val in enumerate(self.compiler.compiler_so):
                 if val=='-bundle':
-                    self.compiler_so[i] = '-dynamiclib'
+                    self.compiler.compiler_so[i] = '-dynamiclib'
 
         # TODO: ABI tag (SONAME or similar)
 
