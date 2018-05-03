@@ -1,2 +1,2 @@
 build_script:
-  - python inspect.py
+  - python inspecter.py

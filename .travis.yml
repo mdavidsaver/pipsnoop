@@ -18,4 +18,7 @@ matrix:
       language: generic
       script:
         - brew install python
-        - python inspect.py
+        - python inspecter.py
+        - pip2 install nose
+        - python setup.py build_ext -i
+        - python -m nose pipsnoop

@@ -5,8 +5,13 @@ from __future__ import print_function
 from functools import wraps
 from pprint import pprint
 
+import sys
+import os
 import platform
 from sysconfig import get_config_vars
+
+print("os.name =", os.name)
+print("sys.platform =", sys.platform)
 
 print("Attributes of platform")
 for name in ['architecture',
