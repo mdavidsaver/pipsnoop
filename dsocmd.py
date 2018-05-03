@@ -1,5 +1,6 @@
 import sys
 import os
+import platform
 
 from setuptools import Command, Distribution
 from setuptools.command.build_ext import build_ext as _build_ext
@@ -23,6 +24,20 @@ def massage_dir_list(bdir, dirs):
     dirs = dirs or []
     dirs.extend([os.path.join(bdir, D) for D in dirs if not os.path.isabs(D)])
     return dirs
+
+def mundge_relative_rpath(dirs):
+    """Attempt to automagically translate relative rpath
+    """
+    out = []
+    for dir in dirs:
+        if os.path.isabs(dir):
+            out.append(dir)
+
+        elif platform.system()=='Linux':
+            out.append('$ORIGIN/%s'%dir)
+
+        else:
+            pass # not supported
 
 class build_dso(Command):
     description = "Build Dynamic Shared Object (DSO).  non-python dynamic libraries (.so, .dylib, or .dll)"
@@ -110,7 +125,7 @@ class build_dso(Command):
         # PATH-like lists
         for dlist in ['include_dirs', 'library_dirs', 'rpath']:
             strs = getattr(self, dlist, None) or []
-            if isinstance(strs, (bytes, unicode)):
+            if isinstance(strs, str):
                 strs = strs.split(os.pathsep)
             setattr(self, dlist, strs)
 
@@ -159,9 +174,13 @@ class build_dso(Command):
 
         # fixup for MAC to build dylib (MH_DYLIB) instead of bundle (MH_BUNDLE)
         if sys.platform == 'darwin':
+            print("XXX", self.compiler.compiler_so)
             for i,val in enumerate(self.compiler.compiler_so):
                 if val=='-bundle':
+                    print("HIT",i)
                     self.compiler.compiler_so[i] = '-dynamiclib'
+            print("YYY", self.compiler.compiler_so)
+            assert '-bundle' not in self.compiler.compiler_so, self.compiler.compiler_so
 
         # TODO: ABI tag (SONAME or similar)
 

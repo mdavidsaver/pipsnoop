@@ -22,4 +22,6 @@ matrix:
         - python -m pip install nose
         - python setup.py build_ext -i
         - ls
+        - otool -l libdemo.*
+        - otool -l dtest.*
         - DYLD_LIBRARY_PATH="$PWD" python -m nose pipsnoop
