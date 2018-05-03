@@ -25,20 +25,6 @@ def massage_dir_list(bdir, dirs):
     dirs.extend([os.path.join(bdir, D) for D in dirs if not os.path.isabs(D)])
     return dirs
 
-def mundge_relative_rpath(dirs):
-    """Attempt to automagically translate relative rpath
-    """
-    out = []
-    for dir in dirs:
-        if os.path.isabs(dir):
-            out.append(dir)
-
-        elif platform.system()=='Linux':
-            out.append('$ORIGIN/%s'%dir)
-
-        else:
-            pass # not supported
-
 class build_dso(Command):
     description = "Build Dynamic Shared Object (DSO).  non-python dynamic libraries (.so, .dylib, or .dll)"
 
@@ -174,13 +160,13 @@ class build_dso(Command):
 
         # fixup for MAC to build dylib (MH_DYLIB) instead of bundle (MH_BUNDLE)
         if sys.platform == 'darwin':
-            print("XXX", self.compiler.compiler_so)
-            for i,val in enumerate(self.compiler.compiler_so):
+            print("XXX", self.compiler.linker_so)
+            for i,val in enumerate(self.compiler.linker_so):
                 if val=='-bundle':
                     print("HIT",i)
-                    self.compiler.compiler_so[i] = '-dynamiclib'
-            print("YYY", self.compiler.compiler_so)
-            assert '-bundle' not in self.compiler.compiler_so, self.compiler.compiler_so
+                    self.compiler.linker_so[i] = '-dynamiclib'
+            print("YYY", self.compiler.linker_so)
+            assert '-bundle' not in self.compiler.linker_so, self.compiler.linker_so
 
         # TODO: ABI tag (SONAME or similar)
 
@@ -233,7 +219,13 @@ class build_dso(Command):
 
         if dso.extra_objects:
             objects.extend(dso.extra_objects)
-        extra_args = dso.extra_link_args or []
+
+        extra_args = []
+        if sys.platform == 'darwin':
+            # we always want to produce relocatable (movable) binaries
+            extra_args.extend(['-install_name', '@loader_path/%s'%os.path.basename(baselib)])
+
+        extra_args.extend(dso.extra_link_args or [])
 
         language = dso.language or self.compiler.detect_language(sources)
 

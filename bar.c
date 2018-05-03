@@ -35,7 +35,7 @@ static struct PyModuleDef dtestymodule = {
 PyMOD(dtest)
 {
 #if PY_MAJOR_VERSION >= 3
-        PyObject *mod = PyModule_Create(&dtestymodule));
+        PyObject *mod = PyModule_Create(&dtestymodule);
 #else
         PyObject *mod = Py_InitModule("dtest", dtest_methods);
 #endif
