@@ -21,4 +21,5 @@ matrix:
         - python inspecter.py
         - python -m pip install nose
         - python setup.py build_ext -i
+        - ls
         - DYLD_LIBRARY_PATH="$PWD" python -m nose pipsnoop

@@ -16,5 +16,6 @@ for PYBIN in /opt/python/*/bin
 do
    "${PYBIN}/pip" install nose
    "${PYBIN}/python" setup.py build_ext -i
+   ls
    LD_LIBRARY_PATH="$PWD" "${PYBIN}/python" -m nose pipsnoop
 done

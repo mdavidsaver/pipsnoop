@@ -73,7 +73,7 @@ class build_dso(Command):
         self.build_lib = None
         self.plat_name = None
         self.build_temp = None
-        self.inplace = 0
+        self.inplace = None
         #self.package = None
 
         self.include_dirs = None
