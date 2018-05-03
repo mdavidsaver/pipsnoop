@@ -1,0 +1,4 @@
+build_script:
+  - python inspecter.py
+  - python setup.py build_ext -i
+  - python testit.py

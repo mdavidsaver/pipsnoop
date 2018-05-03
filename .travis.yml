@@ -19,9 +19,8 @@ matrix:
       script:
         - brew install python
         - python inspecter.py
-        - python -m pip install nose
         - python setup.py build_ext -i
         - ls
         - otool -l libdemo.*
         - otool -l dtest.*
-        - DYLD_LIBRARY_PATH="$PWD" python -m nose pipsnoop
+        - DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:$PWD" python testit.py
