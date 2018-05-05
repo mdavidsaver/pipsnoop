@@ -17,7 +17,17 @@ matrix:
     - os: osx
       language: generic
       script:
-        - brew install python
+        - which python || brew install python
+        - python inspecter.py
+        - python setup.py build_ext -i
+        - ls
+        - otool -l libdemo.*
+        - otool -l dtest.*
+        - python testit.py
+    - os: osx
+      language: generic
+      script:
+        - brew upgrade python
         - python inspecter.py
         - python setup.py build_ext -i
         - ls
