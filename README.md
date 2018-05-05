@@ -33,7 +33,7 @@ Values for checked on python 2.7, 3.3, 3.4, 3.5, 3.6.
      <td>"x86_64"</td>
      <td>"i686"</td>
      <td>"x86_64"</td>
-     <td colspan="2">Not correct!</td>
+     <td colspan="2" style="text-align: center;">Not correct!</td>
  </tr>
  <tr><td></td>
      <td></td>
