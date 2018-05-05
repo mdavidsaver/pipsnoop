@@ -5,8 +5,7 @@ https://travis-ci.org/mdavidsaver/pipsnoop
 https://ci.appveyor.com/project/mdavidsaver/pipsnoop
 
 Useful values to distinguish hosts.
-Values for Linux checked on python 2.7 and 3.x.
-Other targets only 2.7.
+Values for checked on python 2.7, 3.3, 3.4, 3.5, 3.6.
 
 <table>
  <tr><th>Name</th>
@@ -14,30 +13,27 @@ Other targets only 2.7.
      <th>Linux/i686</th>
      <td>OS X/amd64</td>
      <td>Windows/amd64</td>
- </tr>
- <tr><td>os.name</td>
-     <td>"posix"</td>
-     <td>"posix"</td>
-     <td>"posix"</td>
-     <td>"nt"</td>
- </tr>
- <tr><td>sys.platform()</td>
-     <td>"linux2"/"linux"<a href="#sys-plat">[1]</a></td>
-     <td>"linux2"/"linux"</td>
-     <td>"darwin"</td>
-     <td>"win32"</td>
+     <td>Windows/i686</td>
  </tr>
  <tr><td>platform.system()</td>
      <td>"Linux"</td>
      <td>"Linux"</td>
      <td>"Darwin"</td>
      <td>"Windows"</td>
+     <td>"Windows"</td>
+ </tr>
+ <tr><td>platform.architecture()[0]</td>
+     <td>"64bit"</td>
+     <td>"32bit"</td>
+     <td>"64bit"</td>
+     <td>"64bit"</td>
+     <td>"32bit"</td>
  </tr>
  <tr><td>platform.machine()</td>
      <td>"x86_64"</td>
      <td>"i686"</td>
      <td>"x86_64"</td>
-     <td>"AMD64"</td>
+     <td colspan="2">Not correct!</td>
  </tr>
  <tr><td></td>
      <td></td>
@@ -46,5 +42,3 @@ Other targets only 2.7.
      <td></td>
  </tr>
 </table>
-
-<p><a id="sys-plat">[1]</a>Value is "linux2" in python 2.x and "linux" in 3.x</p>
