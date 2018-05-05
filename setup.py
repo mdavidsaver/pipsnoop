@@ -4,7 +4,8 @@ from setuptools import setup, Extension
 
 import dsocmd
 
-dso = Extension('demo', ['foo.c'])
+dso = Extension('demo', ['foo.c'],
+                define_macros = [('BUILD_FOO', None)])
 
 ext = Extension('dtest', ['bar.c'],
                 library_dirs=['.'],

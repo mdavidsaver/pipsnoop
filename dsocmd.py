@@ -117,8 +117,12 @@ class build_dso(Command):
 
         #TODO comma seperated lists .define .undef
 
-        self.include_dirs = massage_dir_list(self.build_temp, self.include_dirs)
-        self.library_dirs = massage_dir_list(self.build_lib , self.library_dirs)
+        # MSVC build puts .lib in build/temp.*
+        # others put .so in build/lib.*
+        self.lib_temp = self.build_temp if sys.platform == "win32" else self.build_lib
+
+        self.include_dirs = massage_dir_list(self.build_temp, self.include_dirs or [])
+        self.library_dirs = massage_dir_list(self.lib_temp , self.library_dirs or [])
 
         # the linker of Darwin errors if asked to search non-existant directories
         self.library_dirs = list(filter(os.path.isdir, self.library_dirs))
@@ -243,8 +247,12 @@ class build_ext(_build_ext):
     def finalize_options(self):
         _build_ext.finalize_options(self)
 
+        # MSVC build puts .lib in build/temp.*
+        # others put .so in build/lib.*
+        self.lib_temp = self.build_temp if sys.platform == "win32" else self.build_lib
+
         self.include_dirs = massage_dir_list(self.build_temp, self.include_dirs or [])
-        self.library_dirs = massage_dir_list(self.build_lib , self.library_dirs or [])
+        self.library_dirs = massage_dir_list(self.lib_temp  , self.library_dirs or [])
 
     def run(self):
         self.run_command('build_dso')
@@ -254,7 +262,7 @@ class build_ext(_build_ext):
 
     def build_extension(self, ext):
         ext.include_dirs = massage_dir_list(self.build_temp, ext.include_dirs or [])
-        ext.library_dirs = massage_dir_list(self.build_lib , ext.library_dirs or [])
+        ext.library_dirs = massage_dir_list(self.lib_temp  , ext.library_dirs or [])
 
         ext.extra_link_args = ext.extra_link_args or []
 
