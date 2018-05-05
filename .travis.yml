@@ -28,9 +28,9 @@ matrix:
       language: generic
       script:
         - brew upgrade python
-        - python inspecter.py
-        - python setup.py build_ext -i
+        - python3 inspecter.py
+        - python3 setup.py build_ext -i
         - ls
         - otool -l libdemo.*
         - otool -l dtest.*
-        - python testit.py
+        - python3 testit.py
