@@ -256,6 +256,11 @@ class build_ext(_build_ext):
         ext.include_dirs = massage_dir_list(self.build_temp, ext.include_dirs or [])
         ext.library_dirs = massage_dir_list(self.build_lib , ext.library_dirs or [])
 
+        ext.extra_link_args = ext.extra_link_args or []
+
+        if platform.system() == 'Linux':
+            ext.extra_link_args.extend(['-Wl,-rpath,$ORIGIN'])
+
         # the Darwin linker errors if given non-existant directories :(
         [self.mkpath(D) for D in ext.library_dirs]
 

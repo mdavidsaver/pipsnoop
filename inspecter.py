@@ -77,7 +77,9 @@ compiler.set_include_dirs(['idirA','idirB'])
 # -L
 compiler.set_library_dirs(['ldirC','ldirD'])
 # -rpath
-compiler.set_runtime_library_dirs(['rdirC','rdirD'])
+if sys.platform != 'win32':
+    # "don't know how to set runtime library search path for MSVC++"
+    compiler.set_runtime_library_dirs(['rdirC','rdirD'])
 
 # compiler.initialize("name") # for cross compile
 

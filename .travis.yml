@@ -23,4 +23,4 @@ matrix:
         - ls
         - otool -l libdemo.*
         - otool -l dtest.*
-        - DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:$PWD" python testit.py
+        - python testit.py

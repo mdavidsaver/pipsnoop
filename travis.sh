@@ -16,5 +16,5 @@ for PYBIN in /opt/python/*/bin
 do
    "${PYBIN}/python" setup.py build_ext -i
    ls
-   LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD" "${PYBIN}/python" testit.py
+   "${PYBIN}/python" testit.py
 done
