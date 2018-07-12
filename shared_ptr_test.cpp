@@ -12,6 +12,12 @@
 #else
 #  warning c++98
 #endif
+#ifdef __GLIBCXX__
+#  warning GNU libstdc++
+#endif
+#ifdef _LIBCPP_VERSION
+#  warning llvm libc++
+#endif
 
 #if __cplusplus>=201103L || (defined(_MSC_VER) && (_MSC_VER>=1600)) || (__clang__ && __APPLE__)
 // c++11 or MSVC 2010

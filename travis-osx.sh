@@ -5,9 +5,31 @@ xcode-select -v
 gcc -v
 clang -v
 
-g++ -o shared_ptr_test1 shared_ptr_test.cpp && ./shared_ptr_test1
-clang++ -o shared_ptr_test2 shared_ptr_test.cpp && ./shared_ptr_test2
-/usr/bin/clang -fno-strict-aliasing -fno-common -dynamic -arch i386 -arch x86_64 -g -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -o shared_ptr_test3 shared_ptr_test.cpp && ./shared_ptr_test3
+dotest() {
+    echo "==================================================="
+    "$@" -dM -E -x c++ test.cpp || true
+}
+
+echo "" > test.cpp
+
+echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
+dotest gcc
+dotest clang
+
+echo "#include <memory>" > test.cpp
+
+export MACOSX_DEPLOYMENT_TARGET=10.9
+dotest clang -std=c++11
+dotest clang -std=c++11 -stdlib=libc++
+unset MACOSX_DEPLOYMENT_TARGET
+
+g++ -o shared_ptr_test shared_ptr_test.cpp && ./shared_ptr_test
+clang++ -o shared_ptr_test shared_ptr_test.cpp && ./shared_ptr_test
+
+clang++ -std=c++98 -o shared_ptr_test shared_ptr_test.cpp && ./shared_ptr_test
+clang++ -std=c++11 -o shared_ptr_test shared_ptr_test.cpp && ./shared_ptr_test
+clang++ -std=c++11 -stdlib=libc++ -o shared_ptr_test shared_ptr_test.cpp && ./shared_ptr_test
+
 
 # https://github.com/joerick/cibuildwheel/blob/master/cibuildwheel/macos.py
 
