@@ -19,7 +19,7 @@
 #  warning llvm libc++
 #endif
 
-#if __cplusplus>=201103L || (defined(_MSC_VER) && (_MSC_VER>=1600)) || (__clang__ && __APPLE__)
+#if __cplusplus>=201103L || (defined(_MSC_VER) && (_MSC_VER>=1600)) || defined(_LIBCPP_VERSION)
 // c++11 or MSVC 2010
 // clang on linux has tr1/memory, clang on OSX doesn't
 #  define SHARED_FROM_STD
