@@ -50,9 +50,4 @@ $PYTHON -m pip --version
 $PYTHON -m pip install --upgrade setuptools
 $PYTHON -m pip install --upgrade wheel
 
-$PYTHON inspecter.py
-$PYTHON setup.py build_ext -i -v
-ls
-otool -l libdemo.*
-otool -l dtest.*
-$PYTHON testit.py
+$PYTHON socketinterrupted.py

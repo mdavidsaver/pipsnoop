@@ -7,14 +7,5 @@ echo "============================================================"
 
 for PYBIN in /opt/python/*/bin
 do
-   "${PYBIN}/python" inspecter.py
-done
-
-echo "============================================================"
-
-for PYBIN in /opt/python/*/bin
-do
-   "${PYBIN}/python" setup.py build_ext -i
-   ls
-   "${PYBIN}/python" testit.py
+   "${PYBIN}/python" socketinterrupted.py
 done
