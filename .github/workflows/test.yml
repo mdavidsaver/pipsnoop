@@ -9,13 +9,16 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        py: ['2.7', '3.7', '3.8', '3.9', '3.10', '3.11', '3.x']
+        py: ['3.7', '3.8', '3.9', '3.10', '3.11', "3.12", '3.x']
+        exclude:
+          - os: 'macos-latest'
+            py: "3.7"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup native python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.py }}
 
@@ -56,7 +59,7 @@ jobs:
           - manylinux_2_28_x86_64
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Docker
         shell: bash
@@ -88,15 +91,15 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - centos:7
           - almalinux:8
           - debian:10
           - debian:11
+          - debian:12
           - debian:testing
           - fedora:latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup
         shell: bash
